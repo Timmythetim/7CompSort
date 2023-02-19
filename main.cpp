@@ -2,12 +2,14 @@
 
 int compCounter = 0;
 
+//returns a pointer to a new node with passed in value;
 Node* newNode(int value)
 {
     Node* n1 = new Node;
     n1->setValue(value);
     return n1;
 }
+//Can be used to populate a random array of 5 elements
 void GenerateArray(int* array)
 {
     int newNum = 0;
@@ -142,41 +144,35 @@ void SortArray(int* array)
     L1.FinalizeArray(array);
     
 }
+//Returns true if array is sorted, otherwise false
 bool TestArray(int* array)
 {
-    
-    bool check = std::is_sorted(array, array + 5);
-    return check;
+    return std::is_sorted(array, array + 5);
 }
 
 int main(void)
 {
-    int array[5] = { 1,2,3,4,5};
+    int array[5] = {1,2,3,4,5};
     int counter_array[5] = {1,2,3,4,5};
     int count = 0;
     int passed = 0;
-    bool check = true;
     do 
     {
-        /*GenerateArray(array);*/
-        for (int i = 0; i < 5; i++)
-        {
-            *(array + i) = *(counter_array + i);
-        }
+        std::copy(counter_array, counter_array+5,array);
         SortArray(array);
-        check = TestArray(array);
-        if (check)
+        if (TestArray(array))
         {
             std::cout << "Final Array: ";
             PrintArray(array);
-            std::cout << "Current Permutation: "; PrintArray(counter_array);
+            std::cout << "Permutation Tested: "; 
+            PrintArray(counter_array);
             std::cout << "\n";
             passed++;
         }
         else
         {
             PrintArray(array);
-            std::cout << "Failed: " << counter_array[0] << "," << counter_array[1] << "," << counter_array[2] << "," << counter_array[3] << "," << counter_array[4] << std::endl;
+            std::cout << "Failed: "; PrintArray(counter_array); std::cout << "\n";
         }
         count++;
         compCounter = 0;
